@@ -38,7 +38,9 @@ layout = [  [sg.Button('GPA Scale',enable_events=True, k='-GPASCALE-')],
 # Create the Window
 def calc_gpa(sum,num):
     if num!=0:
-        return float(sum/num)
+        final_gpa=round(float(sum/num),2)
+        sg.popup_ok_cancel('Average Calculated GPA: '+str(final_gpa),  title="GPA")
+        return final_gpa
     else:
         return 0
 #### GPA calculation functions
@@ -114,10 +116,13 @@ def find_comb(target_gpa,num_courses):
 
     output=""
     class_num=1
+    total_gpa=0
     for grade in random_grades:
+        total_gpa+=grade
         output+='Class'+str(class_num)+': ' +str(convert_to_letter(grade)) + '\n'
         class_num+=1
-    sg.popup_ok_cancel(output,  title="GPA Scale")
+    final_gpa=round(total_gpa/num_courses,2)
+    sg.popup_ok_cancel(output,'GPA: '+str(final_gpa),  title="GPA Scale")
 
 def convert_to_letter(gpa):
     grading_scale = {4.0: 'A', 3.7: 'A-', 3.3: 'B+', 3.0: 'B', 2.7: 'B-', 2.3: 'C+', 2.0: 'C', 1.7: 'C-', 1.3: 'D+', 1.0: 'D', 0.0: 'F'}
